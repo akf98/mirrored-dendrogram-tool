@@ -211,7 +211,7 @@ def modify_weights(root, v, button1=None, button2=None):
                                                                  expand)))
         expand[ind].grid(row=row_number, column=1, sticky='W')
 
-    print('Main Weights: ', [w.get() for w in weights])
+    # print('Main Weights: ', [w.get() for w in weights])
 
     refresh_button = tk.Button(root, text='Refresh Weights', command=lambda: refresh_button_pressed(weights, fix))
     refresh_button.grid(row=60, column=2)
@@ -227,10 +227,10 @@ def section_check_pressed(ind, fix, weights):
         # If we uncheck:
         if fix_state[ind] == 0:
             # Zero the weight
-            print('case 1')
+            # print('case 1')
 
-            print('weights type: ', type(weights))
-            print('weights element type: ', type(weights[0]))
+            # print('weights type: ', type(weights))
+            # print('weights element type: ', type(weights[0]))
 
             weights[ind].delete(0, len(weights[ind].get()))
             weights[ind].insert(0, '0')
@@ -239,10 +239,10 @@ def section_check_pressed(ind, fix, weights):
         # In case its value was fixed, unfix it
         elif fix_state[ind] == 1:
             # if it was fixed --> unfix it
-            print('case 2')
+            # print('case 2')
             
-            print('weights type: ', type(weights))
-            print('weights element type: ', type(weights[0]))
+            # print('weights type: ', type(weights))
+            # print('weights element type: ', type(weights[0]))
             fix_button_pressed(ind, weights, fix)
             weights[ind].delete(0, len(weights[ind].get()))
             weights[ind].insert(0, '0')
@@ -251,9 +251,9 @@ def section_check_pressed(ind, fix, weights):
         fix[ind]['state'] = 'disabled'
     elif check_values[ind].get() == 1:
         # If we check:
-        print('case 3')
-        print('weights type: ', type(weights))
-        print('weights element type: ', type(weights[0]))
+        # print('case 3')
+        # print('weights type: ', type(weights))
+        # print('weights element type: ', type(weights[0]))
         fix_button_pressed(ind, weights, fix)
         fix[ind]['state'] = 'normal'
 
