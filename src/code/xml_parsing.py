@@ -27,11 +27,10 @@ def set_subweights(f):
     default_subweights = [[] for a in range(7 if f.upper() == 'C' else 8)]
 
     subtitles = get_subsection_names(f)
-    subtitles[0].pop(0)
     for i in range(len(default_subweights)):
         leng = len(subtitles[i])
         default_subweights[i] = [1 / leng for a in range(leng)]
-
+    
 
 def get_section_names(t, original=False):
     tree = ET.parse(base_root +'\\data\\{0}1.xml'.format(t.upper()))
@@ -99,11 +98,9 @@ def text_similarity(a, b):
 
 
 def calc_sim(patient_type_initial, patient_1_number, patient_2_number, weights=None, subWeights=None):
-    global default_subweights
-    global default_weights
+    global default_subweights, default_weights
 
     set_subweights(patient_type_initial)
-
     if subWeights == None:
         subWeights = default_subweights
 
@@ -126,7 +123,7 @@ def calc_sim(patient_type_initial, patient_1_number, patient_2_number, weights=N
         l2count = 0
         l2sim = 0
         l2sim_det = 0
-        raw_similarity_values.append([])
+        # raw_similarity_values.append([])
         for e1, e2, eMax in zip(child1, child2, childMax):
 
             l2count += 1
@@ -161,6 +158,7 @@ def calc_sim(patient_type_initial, patient_1_number, patient_2_number, weights=N
                 l2sim += y
                 l2sim_det = y
 
+
             raw_similarity_values[ind].append(l2sim_det)
         ind += 1
         sim.append(l2sim / l2count)
@@ -168,6 +166,7 @@ def calc_sim(patient_type_initial, patient_1_number, patient_2_number, weights=N
     det_weighted_sum = 0
 
     normalized_weights = normalize(weights, subWeights)
+
 
     for x in range(len(raw_similarity_values)):
         for y in range(len(raw_similarity_values[x])):
@@ -184,6 +183,7 @@ def normalize(weights, subWeights):
         for i in range(len(subWeights[k])):
             s = subWeights[k][i]
             normalized[k][i] = weights[k] * subWeights[k][i]
+
     return normalized
 
 
@@ -210,7 +210,7 @@ def create_patient_distance_matrix(f, weights=None, subweights=None):
 
     n = len(files_num)
 
-    print('filesNum: ', files_num)
+    # print('filesNum: ', files_num)
     m = np.zeros([n, n])
     for i in range(n):
         for j in range(0, i):

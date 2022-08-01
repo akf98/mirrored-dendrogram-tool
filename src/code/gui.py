@@ -164,7 +164,6 @@ def modify_weights(root, v, button1=None, button2=None):
 
     titles = xp.get_section_names(patient_type)
     subtitles = xp.get_subsection_names(patient_type)
-    subtitles[0].pop(0)
 
     for i in range(len(sub_weights)):
         sub_weights[i] = [1 / len(subtitles[i]) for a in range(len(subtitles[i]))]
