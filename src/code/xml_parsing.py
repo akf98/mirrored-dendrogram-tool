@@ -15,7 +15,7 @@ default_subweights = []
 default_weights = []
 NB_ELEMENTS = 10
 list_of_patients = []
-base_root = '\\'.join(os.getcwd().split('\\')[:-2])
+base_root = os.getcwd()
 
 
 def set_subweights(f):
@@ -33,7 +33,7 @@ def set_subweights(f):
     
 
 def get_section_names(t, original=False):
-    tree = ET.parse(base_root +'\\data\\{0}1.xml'.format(t.upper()))
+    tree = ET.parse(os.path.join(base_root,'data','{0}1.xml'.format(t.upper())))
     root = tree.getroot()
     labels = []
     for node in list(root):
@@ -43,7 +43,7 @@ def get_section_names(t, original=False):
 
 
 def get_subsection_names(t, original=False):
-    tree = ET.parse(base_root + '\\data\\{0}1.xml'.format(t.upper()))
+    tree = ET.parse(os.path.join(base_root, 'data', '{0}1.xml'.format(t.upper())))
     root = tree.getroot()
     l = []
     a = []
@@ -107,9 +107,9 @@ def calc_sim(patient_type_initial, patient_1_number, patient_2_number, weights=N
     if weights == None:
         weights = default_weights
 
-    tree1 = ET.parse(base_root + '\\data\\{0}{1}.xml'.format(patient_type_initial.upper(), patient_1_number))
-    tree2 = ET.parse(base_root + '\\data\\{0}{1}.xml'.format(patient_type_initial.upper(), patient_2_number))
-    tree_max = ET.parse(base_root + '\\data\\{0}{1}.xml'.format(patient_type_initial.upper(), 'Max'))
+    tree1 = ET.parse(os.path.join(base_root, 'data','{0}{1}.xml'.format(patient_type_initial.upper(), patient_1_number)))
+    tree2 = ET.parse(os.path.join(base_root, 'data','{0}{1}.xml'.format(patient_type_initial.upper(), patient_2_number)))
+    tree_max = ET.parse(os.path.join(base_root, 'data','{0}{1}.xml'.format(patient_type_initial.upper(), 'Max')))
 
     root1 = tree1.getroot()
     root2 = tree2.getroot()

@@ -69,7 +69,7 @@ alpha_g = 0.8
 
 final_weights = [[[], []], [[], []]]
 
-base_root = '\\'.join(os.getcwd().split('\\')[:-2])
+base_root = os.getcwd()
 
 def restart_program(root):
     root.destroy()
@@ -112,7 +112,7 @@ def gen_files(root, v, control_radio_button, migraine_radio_button, confirm_butt
     load_weights_button.grid(row=5, column=1, sticky='W', padx=(10, 0))
 
 def loading_weights(root):
-    k = tk.filedialog.askopenfilename(initialdir=base_root + "\\saved_weights",
+    k = tk.filedialog.askopenfilename(initialdir=os.path.join(base_root,"saved_weights"),
                                       title="Select file",
                                       filetypes=(("XML Files", "*.xml"), ("all files", "*.*")))
 
@@ -792,10 +792,10 @@ def export_and_view_weights(type=1):
     # print('root node [0] ', str(prettify(root_node[0])))
     if (type == 1): #export
         
-        my_path = base_root+ "\\saved_weights"
+        my_path = os.path.join(base_root, "saved_weights")
 
-        file_name = my_path + "\weights_" + letter + '_' + str(datetime.now().date()).replace('-', '') + '_' + str(datetime.now().hour) + str(
-            datetime.now().minute)  + ".xml"
+        file_name = os.path.join(my_path,  "weights_" + letter + '_' + str(datetime.now().date()).replace('-', '') + '_' + str(datetime.now().hour) + str(
+            datetime.now().minute)  + ".xml")
         
         f = open(file_name, "w")
 
@@ -1131,13 +1131,15 @@ def generate_dimensions(bottom_left_corner, figure_width, figure_height, figure_
 
 def make_dpi_aware():
     # print(platform.release())
-    if float(platform.release()) >= 8:
+    if sys.platform == "win32" and float(platform.release()) >= 8:
         ctypes.windll.shcore.SetProcessDpiAwareness(True)
-
+        return
+    else:
+        return
 
 if __name__ == '__main__':
     welcome_screen = tk.Tk()
-    print(base_root)
+    print(os.getcwd())
     w = welcome_screen.winfo_reqwidth()
     h = welcome_screen.winfo_reqheight()
     ws = welcome_screen.winfo_screenwidth()
@@ -1146,7 +1148,7 @@ if __name__ == '__main__':
     y = (hs / 2) - (h / 2) - 250
     welcome_screen.geometry('+%d+%d' % (x, y))
 
-    spath = base_root + "\\src\\code\\images\\lau.jpg"
+    spath = os.path.join(os.getcwd(), 'src', 'code', 'images', 'lau.jpg' )
     simg = ImageTk.PhotoImage(Image.open(spath))
     welcome_screen.minsize(height=simg.height() + 250, width=simg.width())
     welcome_screen.tk.call('tk', 'scaling', 2.0)
